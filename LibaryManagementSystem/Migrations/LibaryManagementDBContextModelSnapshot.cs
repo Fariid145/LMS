@@ -17,39 +17,6 @@ namespace LibaryManagementSystem.Migrations
                 .HasAnnotation("ProductVersion", "3.1.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("LibaryManagementSystem.Models.Admin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("varchar(160)")
-                        .HasMaxLength(160);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("varchar(160)")
-                        .HasMaxLength(160);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(72)")
-                        .HasMaxLength(72);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("LibaryManagementSystem.Models.Books", b =>
                 {
                     b.Property<int>("Id")
@@ -59,8 +26,14 @@ namespace LibaryManagementSystem.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("text");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<int>("ISBN")
                         .HasColumnType("int");
@@ -73,36 +46,41 @@ namespace LibaryManagementSystem.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("LibaryManagementSystem.Models.Liberian", b =>
+            modelBuilder.Entity("LibaryManagementSystem.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("LibaryManagementSystem.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Liberians");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("LibaryManagementSystem.Models.User", b =>
@@ -156,6 +134,9 @@ namespace LibaryManagementSystem.Migrations
                         .HasColumnType("varchar(24)")
                         .HasMaxLength(24);
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("varchar(16)")
@@ -163,7 +144,27 @@ namespace LibaryManagementSystem.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("LibaryManagementSystem.Models.Books", b =>
+                {
+                    b.HasOne("LibaryManagementSystem.Models.Category", "Category")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LibaryManagementSystem.Models.User", b =>
+                {
+                    b.HasOne("LibaryManagementSystem.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,61 @@
+
+@using LibaryManagementSystem
+@model User
+
+
+<style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {
+        height: 1500px
+    }
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+    }
+
+    .sidenav {
+        height: auto;
+        padding: 15px;
+        border: solid;
+        border-color: blue;
+        background-color: aqua;
+    }
+
+    .row.content {
+        height: auto;
+    }
+</style>
+<h4 class="text-dark">Libary Management System</h4>
+<hr>
+<!-- A vertical navbar -->
+<nav class="navbar bg-dark col-md-12 ">
+
+    <!-- Links -->
+    <ul class="navbar-nav nav nav-pills nav-stacked">
+        <li class="nav-item active">
+            <a asp-area="" asp-controller="Admin" asp-action="Index">Admin Management</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="User" asp-action="Index">User Management</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Book" asp-action="Index">Books Management</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Category" asp-action="Index">Category Management</a>
+        </li>
+    </ul><br>
+
+</nav>
+<br>
+
+
+
+
+
+
+
+
+

@@ -3,81 +3,63 @@
 // using System.Linq;
 // using System.Security.Claims;
 // using System.Threading.Tasks;
+// using LibaryManagementSystem.Interfaces;
 // using LibaryManagementSystem.Models;
-// using LibaryManagementSystem.Repos;
-// using EShopping.Service;
+// using LibaryManagementSystem.Services;
 // using Microsoft.AspNetCore.Authentication;
 // using Microsoft.AspNetCore.Authentication.Cookies;
 // using Microsoft.AspNetCore.Authorization;
 // using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
-// using MySql.Data.MySqlClient;
-// namespace LibaryManagementSystem.Controllers
-// {
-//     public class AdminController
-//     {
-        
-//     }
-// }
-
 
 // namespace EShopping.Controllers
 // {
 //     [Authorize(Roles = "Administrator")]
-//     public class CustomerController : Controller
+//     public class AdminController : Controller
 //     {
-       
-//         private readonly ICustomerService _customerService;
-//         public CustomerController(ICustomerService customerService)
+//         private readonly IAdminService _adminService;
+//         public AdminController(IAdminService adminService)
 //         {
-//             _customerService = customerService;
+//             _adminService = adminService;
 //         }
+
 
 //         public IActionResult Index()
 //         {
-//             return View(_customerService.GetAll());
+//             return View(_adminService.GetAll());
 //         }
 
-//         public  IActionResult Details(int? id)
+//         public IActionResult Details(int? id)
 //         {
 //             if (id == null)
 //             {
 //                 return NotFound();
 //             }
 
-//             var customer = _customerService.FindById(id.Value);
-//             if (customer == null)
+//             var admin = _adminService.FindById(id.Value);
+//             if (admin == null)
 //             {
 //                 return NotFound();
 //             }
 
-//             return View(customer);
+//             return View(admin);
 //         }
-        
+
 //         [HttpGet]
-//         [AllowAnonymous]
 //         public IActionResult Create()
 //         {
 //             return View();
 //         }
 
 //         [HttpPost]
-//         [AllowAnonymous]
 //         [ValidateAntiForgeryToken]
-//         public IActionResult Create(Customer customer, bool isCheckout = false )
+//         public IActionResult Create(Admin admin)
 //         {
 //             if (ModelState.IsValid)
 //             {
-//                 _customerService.Create(customer);
-//                 return Login(customer.Username, customer.Password, isCheckout);
+//                 _adminService.Create(admin);
 
 //             }
-//             else
-//             {
-//                 ViewBag.Message = "Invalid Details";
-//                 return isCheckout ? RedirectToAction("Checkout", "Order") : RedirectToAction("Index", "Home");
-//             }
-
+//             return RedirectToAction("Index", "Admin");
 //         }
 
 //         [HttpGet]
@@ -88,32 +70,32 @@
 //                 return NotFound();
 //             }
 
-//             var customer = _customerService.FindById(id.Value);
-//             if ( customer== null)
+//             var admin = _adminService.FindById(id.Value);
+//             if (admin == null)
 //             {
 //                 return NotFound();
 //             }
-//             return View(customer);
+//             return View(admin);
 //         }
 
 //         [HttpPost]
 //         [ValidateAntiForgeryToken]
-//         public IActionResult Edit(int id, Customer customer)
+//         public IActionResult Edit(int id, Admin admin)
 //         {
-//             if (id != customer.CustomerId)
+//             if (id != admin.Id)
 //             {
 //                 return NotFound();
 //             }
 
 //             if (ModelState.IsValid)
 //             {
-//                 _customerService.Update(customer);
+//                 _adminService.Update(admin);
 //                 return RedirectToAction(nameof(Index));
 //             }
-//             return View(customer);
+//             return View(admin);
 //         }
 
-     
+
 //         public IActionResult Delete(int? id)
 //         {
 //             if (id == null)
@@ -121,33 +103,29 @@
 //                 return NotFound();
 //             }
 
-//             var customer = _customerService.FindById(id.Value);
-//             if (customer == null)
+//             var admin = _adminService.FindById(id.Value);
+//             if (admin == null)
 //             {
 //                 return NotFound();
 //             }
 
-//             return View(customer);
+//             return View(admin);
 //         }
 
-       
+
 //         [HttpPost, ActionName("Delete")]
 //         [ValidateAntiForgeryToken]
 //         public IActionResult DeleteConfirmed(int id)
 //         {
-            
-//             _customerService.Delete(id);
+
+//             _adminService.Delete(id);
 //             return RedirectToAction(nameof(Index));
 //         }
 
 
-//         public IActionResult ShoppingCart()
-//         {
-//             return View();
-//         }
+       
 
 //         [HttpGet]
-//         [AllowAnonymous]
 //         public IActionResult Logout()
 //         {
 
@@ -165,37 +143,37 @@
 
 //         [HttpPost]
 //         [AllowAnonymous]
-//         public IActionResult Login(string username, string password, bool isCheckout = false)
+//         public IActionResult Login(string email, string password)
 //         {
 
-//             var customer = _customerService.Login(username, password);
-//             if (customer == null)
+//             var admin = _adminService.Login(email, password);
+//             if (admin == null)
 //             {
-//                 ViewBag.Message = "Invalid Username/Password";
-//                 if (isCheckout)
-//                 {
-//                     return RedirectToAction("Checkout", "Order");
-//                 }
+//                 ViewBag.Message = "Invalid Email/Password";
 //                 return View();
 //             }
 //             else
 //             {
 //                 var claims = new List<Claim>
 //                 {
-//                     new Claim(ClaimTypes.Name, $"{customer.FirstName}"),
-//                     new Claim(ClaimTypes.GivenName, $"{customer.FirstName} {customer.LastName}"),
-//                     new Claim(ClaimTypes.NameIdentifier, customer.CustomerId.ToString()),
-//                     new Claim(ClaimTypes.Email, customer.Email),
-//                     new Claim(ClaimTypes.Role, "Customer"),
+//                     new Claim(ClaimTypes.Name, $"{admin.FirstName}"),
+//                     new Claim(ClaimTypes.GivenName, $"{admin.FirstName} {admin.LastName}"),
+//                     new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
+//                     new Claim(ClaimTypes.Email, admin.Email),
+//                     new Claim(ClaimTypes.Role, "Administrator"),
 //                 };
 //                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 //                 var authenticationProperties = new AuthenticationProperties();
 //                 var principal = new ClaimsPrincipal(claimsIdentity);
 //                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authenticationProperties);
-//                 return isCheckout? RedirectToAction("Checkout", "Order") : RedirectToAction("Index", "Home");
+                // return RedirectToAction("Dashboard", "Admin");
 //             }
 
+
+//         }
+//         public IActionResult Dashboard()
+//         {
+//             return View();
 //         }
 //     }
-
 // }

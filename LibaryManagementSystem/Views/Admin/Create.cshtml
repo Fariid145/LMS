@@ -1,4 +1,4 @@
-@model LibaryManagementSystem.Models.Admin
+@* @model LibaryManagementSystem.Models.Admin
 
 @{
     ViewData["Title"] = "Create";
@@ -49,7 +49,10 @@
 
                     <div class="form-group ">
                         <input type="submit" value="Submit" class="btn btn-success col-sm-12" />
+                         <span class="mr-3">Do you have an account already?<a asp-area="" asp-controller="Admin" asp-action="Login">Login Here</a></span>
                     </div>
+                    
+                   
                 </form>
             </div>
         </div>
@@ -61,4 +64,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+} *@

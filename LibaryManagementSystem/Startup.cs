@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibaryManagementSystem.Interfaces;
 using LibaryManagementSystem.Models;
+using LibaryManagementSystem.Repositories;
+using LibaryManagementSystem.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +31,12 @@ namespace LibaryManagementSystem
             services.AddControllersWithViews();
             services.AddDbContext<LibaryManagementDBContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("LibaryManagementDBContext")));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
+            // // services.AddScoped<IAdminRepository, AdminRepository>();
+            // services.AddScoped<IAdminService, AdminService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

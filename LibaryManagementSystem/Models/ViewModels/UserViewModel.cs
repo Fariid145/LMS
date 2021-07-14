@@ -18,9 +18,13 @@ namespace LibaryManagementSystem.Models.ViewModels
     }
     public class RegisterUserViewModel
     {
-        [Required(ErrorMessage = "User name is required")]
-        [Display(Name = "User Name:")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "User first name is required")]
+        [Display(Name = "First Name:")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "User last name is required")]
+        [Display(Name = "Last Name:")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "User E-mail is required")]
         [Display(Name = "E-mail Address:")]

@@ -1,0 +1,91 @@
+@model IEnumerable<LibaryManagementSystem.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Details
+            </th>
+            <th>
+                Delete
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelUser => user.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Gender)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> 
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@user.Id">Details</a> 
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
